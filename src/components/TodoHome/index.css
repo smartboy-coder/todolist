@@ -1,6 +1,7 @@
 .container {
   background-color: #f9fbfe;
   height: 100vh;
+  overflow: auto;
 }
 .box{
     padding: 50px;
