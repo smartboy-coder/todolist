@@ -68,3 +68,13 @@
   list-style-type: none;
 }
 
+.noTasks-container{
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+}
+.noTasks-heading{
+  color:#525252;
+  font-weight: bold;
+}

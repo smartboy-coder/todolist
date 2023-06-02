@@ -9,21 +9,24 @@ const todos = [
     { id: 3, task: "Learn js" }
 ]
 
-class TodoHome extends Component {
-    state = { todoList: todos, input: "", id: todos.slice(-1)[0].id }
 
-    onChangeInput = (event) => {
-        this.setState({ input: event.target.value })
+
+class TodoHome extends Component {
+    state = { todoList: todos, id: 3, inputTask: "" }
+
+    onChangeInputTask = (event) => {
+        this.setState({ inputTask: event.target.value })
     }
 
     addTask = () => {
-        const { input, id } = this.state
-        if (input === '') {
-            alert("Please Enter the task to add")
+        const { id, inputTask } = this.state
+        if (inputTask === "") {
+            alert("Please Enter the task")
         }
         else {
-            const todoItem = { id: id + 1, task: input }
-            this.setState(prevState => ({ todoList: [...prevState.todoList, todoItem], id: prevState.id + 1, input: "" }))
+            const todoItem = { id: id + 1, task: inputTask }
+            console.log(todoItem)
+            this.setState(prevState => ({ todoList: [...prevState.todoList, todoItem], id: prevState.id + 1, inputTask: "" }))
         }
 
     }
@@ -34,12 +37,19 @@ class TodoHome extends Component {
             eachItem.id !== id
         ))
         this.setState({ todoList: updatedList })
+
     }
 
-    render() {
-        const { todoList, input } = this.state
+    renderNoTasksLeft = () => (
+        <div className='noTasks-container'>
+            <p className='noTasks-heading'>No Tasks Left</p>
+        </div>
+    )
 
-        console.log(todoList)
+    render() {
+        const { inputTask, todoList } = this.state
+        console.log(todoList.length)
+
         return (
             <div className='container'>
                 <div className='box'>
@@ -47,15 +57,19 @@ class TodoHome extends Component {
                     <h1 className="create-task-heading">
                         Create <span className="create-task-heading-subpart">Task</span>
                     </h1>
-                    <input type="text" id="todoUserInput" className="todo-user-input" placeholder="What needs to be done?" onChange={this.onChangeInput} value={input} />
-                    <button className="add-todo-button" id="addTodoButton" onClick={this.addTask}>Add</button>
+                    <input type="text" className="todo-user-input" placeholder="What needs to be done?" onChange={this.onChangeInputTask} value={inputTask} />
+                    <button className="add-todo-button" onClick={this.addTask}>Add</button>
                     <h1 className="todo-items-heading">
                         My <span className="todo-items-heading-subpart">Tasks</span>
                     </h1>
-                    <ul className="todo-items-container" id="todoItemsContainer">
-                        {todoList.map(eachItem => (
-                            <Todo key={eachItem.id} id={eachItem.id} todoTask={eachItem.task} deleteItem={this.deleteItem} />
-                        ))}
+                    <ul className="todo-items-container">
+                        {
+                            todoList.length === 0 ? this.renderNoTasksLeft() : (
+                                todoList.map(eachItem => (
+                                    <Todo key={eachItem.id} id={eachItem.id} todoTask={eachItem.task} deleteItem={this.deleteItem} />
+                                ))
+                            )
+                        }
                     </ul>
                 </div>
             </div>

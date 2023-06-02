@@ -1,7 +1,7 @@
 import './index.css'
 import { Component } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { MdDelete } from "react-icons/md";
+
 
 class Todo extends Component {
     state = { isChecked: false }
@@ -9,8 +9,6 @@ class Todo extends Component {
     onChecked = () => {
         this.setState(prevState => ({ isChecked: !prevState.isChecked }))
     }
-
-
 
     render() {
         const { id, todoTask,deleteItem } = this.props
@@ -26,7 +24,7 @@ class Todo extends Component {
                 <div className='label-container'>
                     <label className={`checkbox-label ${checked}`} htmlFor={`chebox-${id}`}>{todoTask}</label>
                     <div className='delete-icon-container' onClick={deleteTask}>
-                    <FontAwesomeIcon icon={faTrashCan} />
+                    <MdDelete className='delete-icon'/>
                     </div>
                 </div>
             </li>
